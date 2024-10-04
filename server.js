@@ -2,7 +2,7 @@ import express from "express";
 import signale from "signale";
 import { loginRouter } from "./v1/router/loginRouter.js";
 import { usuarioRouter } from "./v1/router/registroRouter.js";
-
+import { historiRouter } from "./v1/router/historialRouter.js";
 
 import cors from "./node_modules/cors/lib/index.js";
 
@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json())
 app.use("/api/login",loginRouter);
 app.use("/api/registro",usuarioRouter);
+app.use("/api/historial",historiRouter);
 
 
 app.listen(3002, ()=> {

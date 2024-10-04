@@ -38,7 +38,16 @@ export const loginService = {
             return null;
         }
     },
-    
+    updateOneProduct : async (id, product) => {
+        const sql = "UPDATE login SET usuario = ?, contrasena = ?, gmail = ? WHERE id = ?";
+        const params = [product.usuario, product.contrasena, product.gmail, id];
+        try {
+          const [result] = await db.query(sql, params);
+          return result;
+        } catch (error) {
+          return null;
+        }
+    },
     deleteOneProduct : async (id) => {
         const sql = 'DELETE FROM tiendas WHERE id = ?';
         const params = [id];

@@ -1,9 +1,8 @@
 import {db} from '../../database/mysql.js'
 
-export const usuarioService = {
-
+export const historiService = {
     getAllProducts : async () => {
-        const sql = "SELECT * FROM registro";
+        const sql = "SELECT * FROM historial_usuario";
         try {
             const [data] = await db.query(sql, []);
             return data;
@@ -13,7 +12,7 @@ export const usuarioService = {
     },    
     
     getOneProduct : async (id) => {
-        const sql = "SELECT * FROM registro WHERE id=?";
+        const sql = "SELECT * FROM historial_usuario WHERE id=?";
         const params = [id];
         try {
             const [result] = await db.query(sql, params);
@@ -25,34 +24,32 @@ export const usuarioService = {
     },
      
     createNewProduct : async (product) => {
-        const sql = "INSERT INTO registro(nombre, apellido, telefono, telefonoTaxi) VALUES (?, ?, ?, ?)";
-        const params = [product.nombre, product.apellido, product.telefono, product.telefonotaxi];
+        const sql = "INSERT INTO historial_usuario (hora_entrada, hora_salida, fecha) VALUES (?, ?, ?)";
+        const params = [product.hora_entrada, product.hora_salida, product.fecha];
         try {
             const [resultado] = await db.query(sql, params);
             return {
-                nombre: product.nombre,
-                apellido: product.apellido, 
-                telefono: product.telefono, 
-                telefonotaxi: product.telefonotaxi, 
+                hora_entrada: product.hora_entrada,
+                hora_salida: product.hora_salida, 
+                fecha: product.fecha, 
                 id: resultado.insertId
             }
         } catch (error) {
             return null;
         }
     },
-    
     updateOneProduct : async (id, product) => {
-        const sql = "UPDATE registro SET nombre = ?, apellido = ?, telefono = ?, telefonoTaxi = ? WHERE id = ?";
-        const params = [product.nombre, product.apellido, product.telefono, product.telefonotaxi, id];
+        const sql = "UPDATE historial_usuario SET hora_entrada = ?, hora_salida = ?, fecha = ? WHERE id = ?";
+        const params = [product.hora_entrada, product.hora_salida, product.fecha, id];
         try {
           const [result] = await db.query(sql, params);
           return result;
         } catch (error) {
           return null;
         }
-    },    
+    }, 
     deleteOneProduct : async (id) => {
-        const sql = 'DELETE FROM registro WHERE id = ?';
+        const sql = 'DELETE FROM historial_usuario WHERE id = ?';
         const params = [id];
         try {
             const result = await db.query(sql, params);
@@ -61,6 +58,4 @@ export const usuarioService = {
             return null;
         }
     }
-
-
 }
